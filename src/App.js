@@ -10,15 +10,15 @@ function App() {
     const [height, setHeight] = useState([]);
     const [mass, setMass] = useState([]);
     const [birth, setBirth] = useState([]);
-    const [wholeCharacter, setWholeCharacter] = useState({
-        person: [],
-        home: [],
-        type: [],
-        height: [],
-        mass: [],
-        birth: []
-
-    });
+    // const [wholeCharacter, setWholeCharacter] = useState({
+    //     person: [],
+    //     home: [],
+    //     type: [],
+    //     height: [],
+    //     mass: [],
+    //     birth: []
+    //
+    // });
 
 
     useEffect(() => {
@@ -30,10 +30,10 @@ function App() {
 
             const world = [];
             const species = [];
-            // const person = [];
-            // const height = [];
-            // const mass = [];
-            // const birth = [];
+            const person = [];
+            const height = [];
+            const mass = [];
+            const birth = [];
             for (const element of characters) {
                 const nameResponse = element.name
                 person.push(nameResponse);
@@ -49,24 +49,58 @@ function App() {
                 const speciesResponse = await axios.get(
                     element.species)
                 species.push(speciesResponse.data.name)
+                setPerson(person);
+                setHeight(height);
+                setMass(mass);
+                setBirth(birth);
+                setHome(world);
+                setType(species);
+
             }
             // setPerson(person);
             // setHeight(height);
             // setMass(mass);
             // setBirth(birth);
-            setHome(world);
-            setType(species);
+            // setHome(world);
+            // setType(species);
+            console.log(home);
+            console.log(type);
+
+            const testMap = characters.map((character, index) => {
+                character.homeworld = home[index]
+                character.species = type[index]
+                if (character.species === undefined){
+                    character.species = ""
+                }
+                console.log("CWH", character.homeworld, home[index], character.species, type[index])
+                return {
+                    person: character.name,
+                    home: character.homeworld,
+                    type: character.species,
+                    height: character.height,
+                    mass: character.mass,
+                    birth: character.birth_year
+                }
+            })
+            console.log("TEST", testMap)
+
+
+            //     setType(species);
+            //     const testCombine =[...person, ...height, ...mass, ...birth, ...world, ...species]
+            //     console.log(testCombine)
+
         }
 
-
-        // setWholeCharacter({
-        //     person: person,
-        //     height: height,
-        //     mass: mass,
-        //     birth: birth,
-        //     home: home,
-        //     type: type
-        // })
+// let newArray = home.toString().split(',');
+//         console.log(newArray);
+//         setWholeCharacter({
+//             person: [...person],
+//             height: [...height],
+//             mass: [...mass],
+//             birth: [...birth],
+//             home: [...home],
+//             type: [...type]
+//         })
 // console.log("WHOLE CHARACTER", wholeCharacter)
 
         // Object.values(wholeCharacter).map(function(value, index) {
@@ -80,32 +114,13 @@ function App() {
 
     }, [characters]);
 
-    let theName = ""
-    let theHeight = ""
-    let theMass = ""
-    let theBirth = ""
-    const data = characters.map((character, index) => {
-            theName = character.name;
-            theHeight = character.height;
-            theMass = character.mass;
-            theBirth = character.birth_year;
 
-        // console.log(name, index);
-        // return (
-        //         <>
-        //             <h1>"Mapping Data</h1>
-        //             <h3>{character.name}</h3>
-        //             <p>{character.height}</p>
-        //             <p>{character.mass}</p>
-        //             <p>{character.birth_year}</p>
-        //         </>
-        //     )
-
-
-    })
     return (
         <>
             {characters.map((character, index) => {
+                // character.homeworld = home[index];
+                // character.species = type[index];
+
                 return (
                     <div className={""}>
                         <table key={index} className={"table flex-container"}>
