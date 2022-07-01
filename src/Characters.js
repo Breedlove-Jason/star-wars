@@ -1,7 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
-function Characters( ) {
 
+function Characters({data} ) {
+    const [characters, setCharacters] = useState([]);
     useEffect(() => {
         const fetchOtherData = (characters) => {
             const charactersWithAllData = [];
@@ -49,13 +50,15 @@ function Characters( ) {
                     })
                 ).then(charactersWithAllData.push(character));
             });
+            console.log("ALL", charactersWithAllData);
             return charactersWithAllData;
+
         };
 
         const fetchApi = () => {
             const characters = [];
             Promise.all(
-                [api].map((api) =>
+                ["https://swapi.dev/api/people/?format=json"].map((api) =>
                     fetch(api)
                         .then((response) => response.json())
                         .then((data) => characters.push(...data.results))
@@ -67,5 +70,30 @@ function Characters( ) {
         };
         fetchApi();
     }, []);
+    console.log("ATTENTION", characters);
+    const listItems = characters.map(
+        (element, index) => {
+            return (
+            <ul type="disc">
+                <li style={{
+                    fontWeight: 'bold',
+                    color: 'red'
+                }}
+                >{element.name}
+                </li>
+                <li>{element.homeworld}</li>
+                <li>{element.species}</li>
+                <li>{element.height}</li>
+                <li>{element.mass}</li>
+                <li>{element.birth_year}</li>
+            </ul>
+            )
+        }
+    )
+    return (
+        <div>
+            {listItems}
+        </div>
+    )
 }
 export default Characters;

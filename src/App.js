@@ -1,6 +1,7 @@
 import './App.css';
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import Characters from "./Characters";
 
 function App() {
     const [characters, setCharacters] = useState([]);
@@ -10,17 +11,6 @@ function App() {
     const [height, setHeight] = useState([]);
     const [mass, setMass] = useState([]);
     const [birth, setBirth] = useState([]);
-    // const [wholeCharacter, setWholeCharacter] = useState({
-    //     person: [],
-    //     home: [],
-    //     type: [],
-    //     height: [],
-    //     mass: [],
-    //     birth: []
-    //
-    // });
-
-
     useEffect(() => {
         async function fetchData() {
             const characterResponse = await axios.get(
@@ -46,6 +36,7 @@ function App() {
                 const homeWorldResponse = await axios.get(
                     element.homeworld)
                 world.push(homeWorldResponse.data.name)
+
                 const speciesResponse = await axios.get(
                     element.species)
                 species.push(speciesResponse.data.name)
@@ -57,58 +48,10 @@ function App() {
                 setType(species);
 
             }
-            // setPerson(person);
-            // setHeight(height);
-            // setMass(mass);
-            // setBirth(birth);
-            // setHome(world);
-            // setType(species);
-            console.log(home);
-            console.log(type);
 
-            const testMap = characters.map((character, index) => {
-                character.homeworld = home[index]
-                character.species = type[index]
-                if (character.species === undefined){
-                    character.species = ""
-                }
-                console.log("CWH", character.homeworld, home[index], character.species, type[index])
-                return {
-                    person: character.name,
-                    home: character.homeworld,
-                    type: character.species,
-                    height: character.height,
-                    mass: character.mass,
-                    birth: character.birth_year
-                }
-            })
-            console.log("TEST", testMap)
-
-
-            //     setType(species);
-            //     const testCombine =[...person, ...height, ...mass, ...birth, ...world, ...species]
-            //     console.log(testCombine)
 
         }
 
-// let newArray = home.toString().split(',');
-//         console.log(newArray);
-//         setWholeCharacter({
-//             person: [...person],
-//             height: [...height],
-//             mass: [...mass],
-//             birth: [...birth],
-//             home: [...home],
-//             type: [...type]
-//         })
-// console.log("WHOLE CHARACTER", wholeCharacter)
-
-        // Object.values(wholeCharacter).map(function(value, index) {
-        //     value.map(function(innerValue, idx) {
-        //         console.log(idx, innerValue)
-        //     })
-        //     console.log("VALUE", index, value)
-        // })
 
         fetchData();
 
@@ -116,37 +59,11 @@ function App() {
 
 
     return (
-        <>
-            {characters.map((character, index) => {
-                // character.homeworld = home[index];
-                // character.species = type[index];
+        <div>
+            <Characters data={characters}/>
+        </div>
+    )
 
-                return (
-                    <div className={""}>
-                        <table key={index} className={"table flex-container"}>
-                            <thead></thead>
-                            <tbody>
-                            <tr>
-                                <td>Name:</td>
-                                <th>{character.name}</th>
-                                <td>Birth:</td>
-                                <th>{character.birth_year}</th>
-                                <td>Height:</td>
-                                <th>{character.height}</th>
-                                <td>Mass:</td>
-                                <th>{character.mass}</th>
-                                <td>HomeWorld:</td>
-                                <th>{character.homeworld}</th>
-                                <td>Species:</td>
-                                <th>{character.species}</th>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                );
-            })}
-        </>
-    );
 
 }
 
