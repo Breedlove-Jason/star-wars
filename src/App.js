@@ -1,7 +1,7 @@
 import './App.css';
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import Characters from "./Characters";
+import Characters from "./components/characters/Characters.component";
 
 function App() {
     const [characters, setCharacters] = useState([]);
@@ -11,6 +11,8 @@ function App() {
     const [height, setHeight] = useState([]);
     const [mass, setMass] = useState([]);
     const [birth, setBirth] = useState([]);
+
+
     useEffect(() => {
         async function fetchData() {
             const characterResponse = await axios.get(
@@ -60,6 +62,7 @@ function App() {
 
     return (
         <div>
+            <h1 className={"title"}>Star Wars API</h1>
             <Characters data={characters}/>
         </div>
     )

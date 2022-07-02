@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    align-self: center;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 300px;
+    position: relative;
+    font-size: 14px;
+}
+.search-box {
+    width: 250px;
+    height: 50px;
+    text-align: center;
+}
